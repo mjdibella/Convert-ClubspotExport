@@ -10,8 +10,6 @@ foreach ($entry in $entries) {
     $entry.Participants = $entry.Participants.Replace("<br>", ",")
     $entry.Participants = $entry.Participants.Replace("  ", " ")
     $entry.Participants = $entry.Participants.Replace("- ", "-")
-    $entry.emails = $entry.emails.Replace(";", ",")
-    $entry.emails = $entry.emails.Replace(", ", ",")
     $entry.Participants = $entry.Participants.Replace("<br>", ",")
     $entry.emails = $entry.emails.Replace(";", ",")
     $entry.emails = $entry.emails.Replace(", ", ",")
@@ -28,8 +26,8 @@ foreach ($entry in $entries) {
                 }
                 # $names[0] + "," + $lastname + "," + $emails[$i]
                 $person = New-Object PSObject
-                $person | Add-member -NotePropertyName "firstName" -NotePropertyValue $names[0]
-                $person | Add-member -NotePropertyName "lastName" -NotePropertyValue $lastname
+                $person | Add-member -NotePropertyName "firstName" -NotePropertyValue $names[0].Trim()
+                $person | Add-member -NotePropertyName "lastName" -NotePropertyValue $lastname.Trim()
                 $person | Add-member -NotePropertyName "email" -NotePropertyValue $emails[$i]
                 $persons += $person
             }
