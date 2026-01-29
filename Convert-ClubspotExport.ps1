@@ -3,7 +3,7 @@
     [Parameter()][switch]$skipperonly,
     [Parameter()][switch]$unique
 )
-$entries = Import-csv $importfile
+$entries = Get-Content -Path $importfile | Select-Object -Skip 1 | ConvertFrom-Csv
 $persons = @()
 foreach ($entry in $entries) {
     $entry.Participants = $entry.Participants.Replace("<br><div class='table-row-tag grey' style='display:inline-block;'>Incomplete crew</div>", "")
@@ -15,6 +15,7 @@ foreach ($entry in $entries) {
     $entry.Participants = $entry.Participants.Replace("<br>", ",")
     $entry.emails = $entry.emails.Replace(";", ",")
     $entry.emails = $entry.emails.Replace(", ", ",")
+    $entry.emails = $entry.emails.Replace(" ", "")
     $participants = $entry.Participants.Split(',')
     $emails = $entry.emails.Split(',')
     $i = 0
